@@ -52,25 +52,25 @@ New-AzRoleAssignment -ObjectId "a1e4d28d-5f6c-40bc-bcd0-cdc0f4f13f49" `
     -ResourceType "Microsoft.DesktopVirtualization/applicationGroups"
 
 # Verify Role Assignment
-Get-AzRoleAssignment -ResourceGroupName "Lab1HPRG" `
+Get-AzRoleAssignment -ResourceGroupName "AzureVirtualDesktop" `
     -ResourceName "PowerShellLabAG" `
     -ResourceType "Microsoft.DesktopVirtualization/applicationGroups" `
     -RoleDefinitionName "Desktop Virtualization User"
 
 # Get the Start Menu Items 
-Get-AzWvdStartMenuItem -ApplicationGroupName "PowerShellLabAG" -ResourceGroupName "Lab1HPRG" | Select-Object AppAlias,FilePath | Format-Table
+Get-AzWvdStartMenuItem -ApplicationGroupName "PowerShellLabAG" -ResourceGroupName "AzureVirtualDesktop" | Select-Object AppAlias,FilePath | Format-Table
 
 # Add the Start Menu Application to the Application Group
 New-AzWvdApplication -AppAlias "Paint" `
     -GroupName "PowerShellLabAG" `
     -Name "Paint" `
-    -ResourceGroupName "Lab1HPRG" `
+    -ResourceGroupName "AzureVirtualDesktop" `
     -CommandLineSetting Allow
 
 # Add a file based application to the Application Group
 New-AzWvdApplication -GroupName "PowerShellLabAG" `
 -Name "Perfmon" `
--ResourceGroupName "Lab1HPRG" `
+-ResourceGroupName "AzureVirtualDesktop" `
 -Filepath "C:\Windows\system32\perfmon.exe" `
 -IconPath "C:\Windows\system32\perfmon.exe" `
 -IconIndex "0" `
@@ -78,15 +78,15 @@ New-AzWvdApplication -GroupName "PowerShellLabAG" `
 -ShowInPortal
 
 # Verify Application Groups
-Get-AzWvdApplication -GroupName "PowerShellLabAG" -ResourceGroupName "Lab1HPRG"
+Get-AzWvdApplication -GroupName "PowerShellLabAG" -ResourceGroupName "AzureVirtualDesktop"
 
 # Register the Application Group to a workspace
 # Start by getting the Application Group path
-Get-AzWvdApplicationGroup -ResourceGroupName "Lab1HPRG" -Name "PowerShellLabAG" | Format-List
+Get-AzWvdApplicationGroup -ResourceGroupName "AzureVirtualDesktop" -Name "PowerShellLabAG" | Format-List
 # Assign the Application Group path to a variable
-$appGroupPath = (Get-AzWvdApplicationGroup -ResourceGroupName "Lab1HPRG" -Name "PowerShellLabAG").Id
+$appGroupPath = (Get-AzWvdApplicationGroup -ResourceGroupName "AzureVirtualDesktop" -Name "PowerShellLabAG").Id
 
 # Add the Application Group to the Workspace
-Register-AzWvdApplicationGroup -ResourceGroupName "Lab1WSRG" `
-    -WorkspaceName "Lab1WS" `
+Register-AzWvdApplicationGroup -ResourceGroupName "AzureVirtualDesktop" `
+    -WorkspaceName "workspace" `
     -ApplicationGroupPath $appGroupPath
