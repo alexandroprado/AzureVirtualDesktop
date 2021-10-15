@@ -5,8 +5,8 @@ Connect-AzAccount
 Get-AzContext
 
 # Set SIG Variables
-$resourceGroup = '<SIGResourceGroup>'
-$galleryName = '<SIGGalleryName>'
+$resourceGroup = 'AzureVirtualDesktop'
+$galleryName = 'AVDImageGallery'
 $imageDefName = '<ImageDefinition>'
 $imageVersion = '<ImageVersion>'
 
